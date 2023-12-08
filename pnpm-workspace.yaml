@@ -1,3 +1,6 @@
 packages:
-  - "apps/*"
-  - "packages/*"
+  - 'apps/bttr/*'
+  - 'apps/custom/*'
+  - 'packages/bttr/*'
+  - 'packages/custom/*'
+  - 'core/*'

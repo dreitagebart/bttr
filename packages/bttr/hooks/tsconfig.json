@@ -1,0 +1,6 @@
+{
+  "extends": "@bttr/tsconfig/react-library.json",
+  "compilerOptions": {},
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}

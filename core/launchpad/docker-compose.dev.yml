@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  launchpad:
+    container_name: launchpad
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    volumes:
+      - ./src:/app/src
+      - ./public:/app/public
+    restart: always
+    ports:
+      - 3000:3000
+    networks:
+      - bttr
+    # labels:
+    #   - traefik.enable=true
+    #   - traefik.
+
+  # Add more containers below (nginx, postgres, etc.)
+
+# Define a network, which allows containers to communicate
+# with each other, by using their container name as a hostname
+networks:
+  bttr:
+    external: true

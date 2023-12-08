@@ -1,0 +1,12 @@
+.titlebar {
+  background-color: #cfcfcf;
+  height: 36px;
+  /* background: #329ea3; */
+  user-select: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  padding-right: 12px;
+  padding-left: 12px;
+}

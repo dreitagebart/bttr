@@ -1,0 +1,19 @@
+version: '3'
+
+services:
+  bttr-proxy:
+    image: traefik:v2.10
+    container_name: bttr-proxy
+    ports:
+      - 80:80
+      - 443:443
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./src:/etc/traefik
+    networks: 
+      - bttr
+
+networks:
+  bttr:
+    external: true

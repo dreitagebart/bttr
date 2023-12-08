@@ -1,0 +1,18 @@
+global:
+  checkNewVersion: true
+  sendAnonymousUsage: true
+
+api:
+  insecure: true
+  dashboard: true
+  debug: true
+
+entryPoints:
+  web:
+    address: :80
+
+providers:
+  docker:
+    watch: true
+    exposedByDefault: false
+    network: bttr-dev

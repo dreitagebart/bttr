@@ -1,0 +1,11 @@
+version: '3.7'
+
+services:
+  bttr:
+    container_name: 'bttr'
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    ports:
+      - 4300:4300

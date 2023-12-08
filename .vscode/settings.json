@@ -3,5 +3,14 @@
     {
       "mode": "auto"
     }
-  ]
+  ],
+  "json.schemas": [
+    {
+      "fileMatch": ["/.bttrrc", "/bttr.config.json"],
+      "url": "/packages/bttr/config/schema.json"
+    }
+  ],
+  "files.associations": {
+    ".bttrrc": "json"
+  }
 }

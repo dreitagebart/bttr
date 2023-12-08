@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+  bttr-proxy-dev:
+    image: traefik:v2.10
+    container_name: bttr-proxy-dev
+    ports:
+      - 80:80
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./src/traefik.dev.yml:/etc/traefik/traefik.yml
+    networks: 
+      - bttr-dev
+
+networks:
+  bttr-dev:
+    external: true

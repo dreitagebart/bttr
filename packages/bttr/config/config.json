@@ -1,0 +1,22 @@
+{
+  "dependencies": {},
+  "systems": [
+    {
+      "systemId": "EMD",
+      "description": "Development System",
+      "production": false
+    },
+    {
+      "systemId": "EMQ",
+      "description": "Testing System",
+      "connection": "",
+      "production": false
+    },
+    {
+      "systemId": "EMP",
+      "description": "Production System",
+      "connection": "",
+      "production": true
+    }
+  ]
+}

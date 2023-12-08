@@ -1,0 +1,148 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
+}
+
+generator pothos {
+  provider = "prisma-pothos-types"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+  schemas  = ["bttr", "custom"]
+}
+
+model App {
+  id           String           @id
+  code         String
+  descriptions AppDescription[]
+
+  @@schema("bttr")
+}
+
+model AppCategory {
+  id String @id
+  descriptions AppCategoryDescription[]
+
+  @@schema("bttr")
+}
+
+model AppCategoryDescription {
+  categoryId String
+  languageId String
+  description String
+  category AppCategory @relation(fields: [categoryId], references: [id])
+
+  @@id([categoryId, languageId])
+  @@schema("bttr")
+}
+
+model AppDescription {
+  appId       String
+  languageId  String
+  description String
+  app         App    @relation(fields: [appId], references: [id])
+
+  @@id([appId, languageId])
+  @@schema("bttr")
+}
+
+model StorageLocation {
+  id           String                       @id
+  descriptions StorageLocationDescription[]
+
+  @@schema("bttr")
+}
+
+model StorageLocationDescription {
+  storageLocationId String
+  languageId        String
+  storageLocation   StorageLocation @relation(fields: [storageLocationId], references: [id])
+
+  @@id([storageLocationId, languageId])
+  @@schema("bttr")
+}
+
+model SalesOrganization {
+  id           String                         @id
+  descriptions SalesOrganizationDescription[]
+
+  @@schema("bttr")
+}
+
+model SalesOrganizationDescription {
+  salesOrganizationId String
+  languageId          String
+  storageLocation     SalesOrganization @relation(fields: [salesOrganizationId], references: [id])
+
+  @@id([salesOrganizationId, languageId])
+  @@schema("bttr")
+}
+
+model Plant {
+  id           String             @id
+  descriptions PlantDescription[]
+
+  @@schema("bttr")
+}
+
+model PlantDescription {
+  plantId    String
+  languageId String
+  plant      Plant  @relation(fields: [plantId], references: [id])
+
+  @@id([plantId, languageId])
+  @@schema("bttr")
+}
+
+model Language {
+  id           String                @id
+  descriptions LanguageDescription[]
+
+  @@schema("bttr")
+}
+
+model LanguageDescription {
+  langId      String
+  languageId  String
+  description String
+  language    Language @relation(fields: [langId], references: [id])
+
+  @@id([langId, languageId])
+  @@schema("bttr")
+}
+
+model Country {
+  id           String               @id
+  descriptions CountryDescription[]
+
+  @@schema("bttr")
+}
+
+model CountryDescription {
+  countryId  String
+  languageId String
+  country    Country @relation(fields: [countryId], references: [id])
+
+  @@id([countryId, languageId])
+  @@schema("bttr")
+}
+
+model User {
+  username  String @id
+  firstname String
+  lastname  String
+
+  @@schema("bttr")
+}
+
+model Department {
+  id   String @id @default(cuid())
+  name String
+
+  @@schema("bttr")
+}

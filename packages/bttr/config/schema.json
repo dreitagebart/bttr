@@ -1,0 +1,59 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "JSON schema for BTTR config",
+  "required": [
+    "systems",
+    "apps"
+  ],
+  "definitions": {
+    "apps": {
+      "type": "object",
+      "required": [
+        "bttr",
+        "custom"
+      ],
+      "properties": {
+        "bttr": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "custom": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "systems": {
+      "description": "List all systems which you created and can connect to.",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "systemId",
+          "description",
+          "connection",
+          "production"
+        ],
+        "properties": {
+          "systemId": {
+            "type": "string"
+          },
+          "description": {
+            "type": "string"
+          },
+          "connection": {
+            "type": "string",
+            "format": "uri"
+          },
+          "production": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "extends": "@bttr/tsconfig/node.json",
+  "compilerOptions": {},
+  "include": ["src"],
+  "exclude": ["node_modules"]
+}
