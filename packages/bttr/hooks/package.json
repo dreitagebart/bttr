@@ -15,7 +15,7 @@
     "react": "^18.2.0"
   },
   "devDependencies": {
-    "@bttr/tsconfig": "workspace:*",
+    "@bttr/tsconfig": "*",
     "typescript": "^5.3.2"
   }
 }

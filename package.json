@@ -1,7 +1,13 @@
 {
   "name": "bttr",
-  "packageManager": "pnpm@8.9.0",
   "private": true,
+  "workspaces": [
+    "apps/bttr/*",
+    "apps/custom/*",
+    "packages/bttr/*",
+    "packages/custom/*",
+    "core/*"
+  ],
   "scripts": {
     "server": "turbo run server --filter=@bttr/server",
     "gui": "turbo run gui --filter=@bttr/gui",
@@ -16,7 +22,7 @@
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
   },
   "devDependencies": {
-    "@bttr/tsconfig": "workspace:*",
+    "@bttr/tsconfig": "*",
     "eslint": "^8.48.0",
     "prettier": "^3.0.3",
     "tsx": "^4.5.0",

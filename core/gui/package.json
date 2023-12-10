@@ -11,13 +11,13 @@
     "tauri": "tauri"
   },
   "dependencies": {
-    "@bttr/config": "workspace:*",
+    "@bttr/config": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "@tauri-apps/api": "^1.5.1",
-    "@bttr/hooks": "workspace:*",
-    "@bttr/icons": "workspace:*",
-    "@bttr/ui": "workspace:*"
+    "@bttr/hooks": "*",
+    "@bttr/icons": "*",
+    "@bttr/ui": "*"
   },
   "devDependencies": {
     "@types/react": "^18.2.15",

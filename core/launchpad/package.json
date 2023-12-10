@@ -10,10 +10,10 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@bttr/icons": "workspace:*",
-    "@bttr/faker": "workspace:*",
-    "@bttr/router": "workspace:*",
-    "@bttr/ui": "workspace:*",
+    "@bttr/icons": "*",
+    "@bttr/faker": "*",
+    "@bttr/router": "*",
+    "@bttr/ui": "*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
