@@ -1,0 +1,191 @@
+version: "3"
+
+services:
+  postgresdb:
+    image: postgres:13
+    container_name: postgresdb
+    restart: no
+    environment:
+      - POSTGRES_USER=dreitagebart
+      - POSTGRES_PASSWORD=supersecret!
+    networks:
+      - bttr
+    labels:
+      - traefik.enable=true
+      - traefik.tcp.routers.postgresdb.entrypoints=tcp
+      - traefik.tcp.routers.postgresdb.rule=HostSNI(`*`)
+      - traefik.tcp.services.postgresdb.loadbalancer.server.port=5432
+
+  proxy:
+    image: traefik:v2.10
+    container_name: proxy
+    ports:
+      - 80:80
+      - 443:443
+      - 5432:5432
+      - 8080:8080
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./core/proxy/src:/etc/traefik
+    networks:
+      - bttr
+
+  server:
+    container_name: server
+    command:
+      - /bin/sh
+      - -c
+      - |
+        yarn workspace @bttr/database generate
+        yarn workspace @bttr/database push
+        yarn workspace @bttr/server server
+    build:
+      args:
+        - APP=@bttr/server
+        - FOLDER=core/server
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+    volumes:
+      - ./core/server:/app/core/server
+      - /app/core/server/node_modules
+    restart: no
+    ports:
+      - 5555:5555
+    networks:
+      - bttr
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.server.entrypoints=web
+      - traefik.http.routers.server.rule=Host(`bttremd`) && PathPrefix(`/graphql`)
+      - traefik.http.services.server.loadbalancer.server.port=3000
+
+  auth:
+    container_name: auth
+    command: yarn workspace @bttr/auth dev
+    build:
+      args:
+        - APP=@bttr/auth
+        - FOLDER=core/auth
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+    volumes:
+      - ./core/auth:/app/core/auth
+      - /app/core/auth/node_modules
+      - /app/core/auth/.next
+    restart: no
+    networks:
+      - bttr
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.auth.entrypoints=web
+      - traefik.http.routers.auth.rule=Host(`bttremd`) && PathPrefix(`/auth`)
+      - traefik.http.services.auth.loadbalancer.server.port=3000
+
+  launchpad:
+    container_name: launchpad
+    command: yarn workspace @bttr/launchpad dev
+    build:
+      args:
+        - APP=@bttr/launchpad
+        - FOLDER=core/launchpad
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+    volumes:
+      - ./core/launchpad:/app/core/launchpad
+      - /app/core/launchpad/node_modules
+    restart: no
+    networks:
+      - bttr
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.launchpad.entrypoints=web
+      - traefik.http.routers.launchpad.rule=Host(`bttremd`)
+      - traefik.http.services.launchpad.loadbalancer.server.port=3000
+
+  customizing:
+    container_name: customizing
+    command: yarn workspace @bttr/customizing dev
+    build:
+      args:
+        - APP=@bttr/customizing
+        - FOLDER=core/customizing
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+    volumes:
+      - ./core/customizing:/app/core/customizing
+      - /app/core/customizing/node_modules
+    restart: no
+    networks:
+      - bttr
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.customizing.entrypoints=web
+      - traefik.http.routers.customizing.rule=Host(`bttremd`) && PathPrefix(`/cust`)
+      - traefik.http.services.customizing.loadbalancer.server.port=3000
+
+  wow:
+    container_name: wow
+    command: yarn workspace @bttr/wow dev
+    build:
+      args:
+        - APP=@bttr/wow
+        - FOLDER=apps/bttr/wow
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+    volumes:
+      - ./apps/bttr/wow:/app/apps/bttr/wow
+      - /app/apps/bttr/wow/node_modules
+    restart: no
+    networks:
+      - bttr
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.wow.entrypoints=web
+      - traefik.http.routers.wow.rule=Host(`bttremd`) && PathPrefix(`/apps/bttr/wow`)
+      - traefik.http.services.wow.loadbalancer.server.port=3000
+
+  test:
+    container_name: test
+    command: yarn workspace @bttr/test dev
+    build:
+      args:
+        - APP=@bttr/test
+        - FOLDER=apps/bttr/test
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+    volumes:
+      - ./apps/bttr/test:/app/apps/bttr/test
+      - /app/apps/bttr/test/node_modules
+    restart: no
+    networks:
+      - bttr
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.test.entrypoints=web
+      - traefik.http.routers.test.rule=Host(`bttremd`) && PathPrefix(`/apps/bttr/test`)
+      - traefik.http.services.test.loadbalancer.server.port=3000
+
+  nuts:
+    container_name: nuts
+    command: yarn workspace @bttr/nuts dev
+    build:
+      args:
+        - APP=@bttr/nuts
+        - FOLDER=apps/bttr/nuts
+      context: .
+      dockerfile: ./docker/Dockerfile.dev
+    volumes:
+      - ./apps/bttr/nuts:/app/apps/bttr/nuts
+      - /app/apps/bttr/nuts/node_modules
+    restart: no
+    networks:
+      - bttr
+    labels:
+      - traefik.enable=true
+      - traefik.http.routers.nuts.entrypoints=web
+      - traefik.http.routers.nuts.rule=Host(`bttremd`) && PathPrefix(`/apps/bttr/nuts`)
+      - traefik.http.services.nuts.loadbalancer.server.port=3000
+
+networks:
+  bttr:
+    external: true

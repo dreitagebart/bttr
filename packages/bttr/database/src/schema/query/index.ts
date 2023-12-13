@@ -1,4 +1,6 @@
-import { builder } from '../builder'
-export * from './user.query'
+import { builder } from "../builder";
 
-builder.queryType()
+export * from "./user.query";
+export * from "./auth.query";
+
+builder.queryType();

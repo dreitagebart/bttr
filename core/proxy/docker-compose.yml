@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 
 services:
   bttr-proxy:
@@ -7,11 +7,12 @@ services:
     ports:
       - 80:80
       - 443:443
+      - 5432:5432
       - 8080:8080
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
       - ./src:/etc/traefik
-    networks: 
+    networks:
       - bttr
 
 networks:

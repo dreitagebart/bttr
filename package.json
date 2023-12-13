@@ -9,8 +9,10 @@
     "core/*"
   ],
   "scripts": {
+    "docker:dev": "turbo run docker:dev",
     "server": "turbo run server --filter=@bttr/server",
     "gui": "turbo run gui --filter=@bttr/gui",
+    "proxy": "turbo run start --filter=@bttr/proxy",
     "launchpad": "turbo run dev --filter=@bttr/launchpad",
     "build": "turbo run build",
     "dev": "turbo run dev",
